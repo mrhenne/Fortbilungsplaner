@@ -29,7 +29,7 @@ button,input,select,textarea{font:inherit}.app{min-height:100vh;display:grid;gri
 
 .tableWrap{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}.tableWrap .historyTable{min-width:980px}.sectionTitle>*{min-width:0}.topbar>*{min-width:0}.actions{justify-content:flex-end}.monthEntry strong{font-weight:750}.filterSummary{line-height:1.4}
 </style>
-<script type="text/javascript" nonce="c10bc2715af944d3b1a8796fd7d" src="//local.adguard.org?ts=1789202035093&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_000000005f6082108ec253a905bcc855%26ts%3D497001%26p%3Dfs%26cid%3D1%26sig%3Dccdff7c439fa2348741ee899d9b9e148dd02950d9bf88e732990722e5a0b049b%26v%3D0&amp;app=com.apple.Safari&amp;css=3&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1"></script><script type="text/javascript" nonce="c10bc2715af944d3b1a8796fd7d" src="//local.adguard.org?ts=1789202035093&amp;name=AdGuard%20Assistant&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script></head>
+<script type="text/javascript" nonce="c10bc2715af944d3b1a8796fd7d" src="//local.adguard.org?ts=1789202035093&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_00000000a368821081f794909fc55fbb%26ts%3D497001%26p%3Dfs%26cid%3D1%26sig%3Da6b1671cc7950b3bf354fc2dc1f5c913867d0021b1fc08673587fc0e3132f3ba%26v%3D0&amp;app=com.apple.Safari&amp;css=3&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1"></script><script type="text/javascript" nonce="c10bc2715af944d3b1a8796fd7d" src="//local.adguard.org?ts=1789202035093&amp;name=AdGuard%20Assistant&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script></head>
 <body>
 <div class="app">
   <aside class="sidebar">
@@ -160,8 +160,12 @@ button,input,select,textarea{font:inherit}.app{min-height:100vh;display:grid;gri
 <div class="modalBackdrop" id="bulkModal"><div class="modal"><h3>Fortbildung mehrfach zuweisen</h3><div class="formGrid">
   <div class="field full"><label>Fortbildung</label><input class="input" id="bulkTitle" placeholder="z. B. BLS Refresher"></div>
   <div class="field"><label>Fortbildungsart</label><select class="select" id="bulkType"></select></div><div class="field"><label>Datum</label><input class="input" id="bulkDate" type="date"></div>
-  <div class="field"><label>Tage pro Mitarbeiter</label><input class="input" id="bulkDays" type="number" min="0" step="0.5" value="1"></div><div class="field"><label>Kosten pro Mitarbeiter (€)</label><input class="input" id="bulkCost" type="number" min="0" step="0.01" value="0"></div>
-  <div class="field"><label>Ort</label><input class="input" id="bulkLocation"></div><div class="field"><label>Status</label><select class="select" id="bulkStatus"><option value="planned">geplant</option><option value="done">absolviert</option></select></div>
+  <div class="field"><label>Gültig bis</label><input class="input" id="bulkValidUntil" type="date"></div><div class="field"><label>Tage pro Mitarbeiter</label><input class="input" id="bulkDays" type="number" min="0" step="0.5" value="1"></div>
+  <div class="field"><label>Kosten pro Mitarbeiter (€)</label><input class="input" id="bulkCost" type="number" min="0" step="0.01" value="0"></div><div class="field"><label>Ort</label><input class="input" id="bulkLocation"></div>
+  <div class="field"><label>Anbieter / Veranstalter</label><input class="input" id="bulkProvider"></div><div class="field"><label>Status</label><select class="select" id="bulkStatus"><option value="planned">geplant</option><option value="done">absolviert</option></select></div>
+  <div class="field"><label>Pflichtfortbildung</label><select class="select" id="bulkMandatory"><option value="no">Nein</option><option value="yes">Ja</option></select></div><div class="field"><label>Individualisierte Fortbildung</label><select class="select" id="bulkIndividual"><option value="no">Nein</option><option value="yes">Ja</option></select></div>
+  <div class="field"><label>Nachweis / Zertifikat</label><select class="select" id="bulkCertificate"><option value="none">nicht erforderlich</option><option value="missing">fehlt</option><option value="available">vorhanden</option></select></div><div class="field"></div>
+  <div class="field full"><label>Notizen</label><textarea class="textarea" id="bulkNotes"></textarea></div>
   <div class="field full"><label>Mitarbeiter auswählen</label><div class="bulkPeople" id="bulkPeople"></div></div>
 </div><div class="modalActions"><button class="btn" data-close="bulkModal">Abbrechen</button><button class="btn primary" id="saveBulkTraining">Für Auswahl anlegen</button></div></div></div>
 
@@ -255,7 +259,7 @@ function renderCoverage(){
   };
   done.sort(sorter);planned.sort(sorter);missing.sort(sorter);
   let total=active.length,covered=done.length+planned.length,pct=total?Math.round(covered/total*100):0,cost=rows.reduce((sum,t)=>sum+(Number(t.cost)||0),0);
-  let col=(name,arr,cls,empty)=>`<div class="coverageColumn"><h3>${name}<span class="badge ${cls}">${arr.length}</span></h3>${arr.length?arr.map(x=>`<div class="coveragePerson"><button onclick="showEmployeeDetails('${x.e.id}')"><strong>${x.e.first} ${x.e.last}</strong><br><small>${x.e.role?x.e.role+' · ':''}${x.t?fmt(x.t.date)+(x.t.location?' · '+x.t.location:''):'noch kein Eintrag'}</small></button>${x.t?`<button class="smallBtn" title="Eintrag bearbeiten" onclick="editTraining('${x.t.id}')">✎</button>`:`<button class="smallBtn" title="Zu ${title} hinzufügen" onclick="startTrainingWithTitle('${x.e.id}',${JSON.stringify(title)})">+</button>`}</div>`).join(''):`<div class="empty">${empty}</div>`}</div>`;
+  let col=(name,arr,cls,empty)=>`<div class="coverageColumn"><h3>${name}<span class="badge ${cls}">${arr.length}</span></h3>${arr.length?arr.map(x=>`<div class="coveragePerson"><button onclick="showEmployeeDetails('${x.e.id}')"><strong>${x.e.first} ${x.e.last}</strong><br><small>${x.e.role?x.e.role+' · ':''}${x.t?fmt(x.t.date)+(x.t.location?' · '+x.t.location:''):'noch kein Eintrag'}</small></button>${x.t?`<button class="smallBtn" title="Eintrag bearbeiten" onclick="editTraining('${x.t.id}')">✎</button>`:`<button class="smallBtn" title="Zur ausgewählten Fortbildung hinzufügen" onclick="addEmployeeToCoverage('${x.e.id}')">+</button>`}</div>`).join(''):`<div class="empty">${empty}</div>`}</div>`;
   $('coverageContent').innerHTML=`<div class="coverageStats"><div class="coverageStat"><small>Teamabdeckung</small><strong>${pct} %</strong></div><div class="coverageStat"><small>Absolviert</small><strong>${done.length}</strong></div><div class="coverageStat"><small>Geplant</small><strong>${planned.length}</strong></div><div class="coverageStat"><small>Noch offen</small><strong>${missing.length}</strong></div></div><div class="filterSummary" style="margin-top:10px">${yf==='all'?'Alle Jahre':yf} · ${rows.length} Einträge · ${money(cost)} Gesamtkosten · Sortierung: ${$('coverageSort')?.selectedOptions[0]?.textContent||'Name A → Z'}</div><div class="coverageGrid">${col('Absolviert',done,'good','Noch niemand absolviert.')}${col('Geplant',planned,'warn','Niemand geplant.')}${col('Noch ohne Eintrag',missing,'danger','Alle Mitarbeiter sind abgedeckt.')}</div>`;
 }
 function renderTypes(){$('typeList').innerHTML=data.types.map((t,i)=>`<div class="typeRow"><input type="color" value="${t.color}" onchange="changeTypeColor(${i},this.value)"><input class="input" value="${t.name}" onchange="renameType(${i},this.value)"><button class="smallBtn dangerText" onclick="removeType(${i})">×</button></div>`).join('')}
@@ -271,10 +275,87 @@ function editEmployee(id){let e=data.employees.find(x=>x.id===id);if(!e)return;e
 function newEmployee(){editingEmployeeId=null;$('employeeModalTitle').textContent='Mitarbeiter anlegen';$('empFirst').value='';$('empLast').value='';$('empRole').value='';$('empActive').value='active';openModal('employeeModal')}
 function editTraining(id){let t=data.trainings.find(x=>x.id===id);if(!t)return;editingTrainingId=id;fillSelectors();$('trainingModalTitle').textContent='Fortbildung bearbeiten';$('trEmployee').value=t.employeeId;$('trType').value=t.type;$('trTitle').value=t.title||'';$('trDate').value=t.date||'';$('trValidUntil').value=t.validUntil||'';$('trDays').value=t.days??1;$('trCost').value=t.cost??0;$('trLocation').value=t.location||'';$('trProvider').value=t.provider||'';$('trStatus').value=t.status||'planned';$('trMandatory').value=t.mandatory?'yes':'no';$('trIndividual').value=t.individual?'yes':'no';$('trCertificate').value=t.certificate||'none';$('trNotes').value=t.notes||'';openModal('trainingModal')}
 function newTrainingForEmployee(id=null){if(!data.employees.filter(e=>e.active!=='inactive').length)return alert('Lege zuerst mindestens einen aktiven Mitarbeiter an.');editingTrainingId=null;fillSelectors();$('trainingModalTitle').textContent='Fortbildung erfassen';$('trEmployee').value=id||$('trEmployee').value;$('trType').value=data.types[0]?.name||'';$('trTitle').value='';$('trDate').value=today();$('trValidUntil').value='';$('trDays').value='1';$('trCost').value='0';$('trLocation').value='';$('trProvider').value='';$('trStatus').value='planned';$('trMandatory').value='no';$('trIndividual').value='no';$('trCertificate').value='none';$('trNotes').value='';openModal('trainingModal')}
-function startTrainingWithTitle(employeeId,title){newTrainingForEmployee(employeeId);$('trTitle').value=title;}
-function openBulkAssign(prefillTitle=''){let active=data.employees.filter(e=>e.active!=='inactive').sort((a,b)=>(a.last+' '+a.first).localeCompare(b.last+' '+b.first));if(!active.length)return alert('Lege zuerst Mitarbeiter an.');fillSelectors();$('bulkTitle').value=prefillTitle||'';$('bulkDate').value=today();$('bulkDays').value='1';$('bulkCost').value='0';$('bulkLocation').value='';$('bulkStatus').value='planned';$('bulkPeople').innerHTML=active.map(e=>`<label class="checkPerson"><input type="checkbox" value="${e.id}"><span>${e.first} ${e.last}<br><small>${e.role||''}</small></span></label>`).join('');openModal('bulkModal')}
-function openCoverageAssign(){let title=$('coverageTraining')?.value||'';if(!title)return alert('Bitte zuerst eine Fortbildung auswählen.');openBulkAssign(title)}
-function saveBulkAssign(){let ids=[...document.querySelectorAll('#bulkPeople input:checked')].map(x=>x.value),title=$('bulkTitle').value.trim(),date=$('bulkDate').value;if(!title||!date)return alert('Fortbildung und Datum fehlen.');if(!ids.length)return alert('Wähle mindestens einen Mitarbeiter aus.');ids.forEach(employeeId=>data.trainings.push({id:uid(),employeeId,type:$('bulkType').value,title,date,validUntil:'',status:$('bulkStatus').value,mandatory:false,individual:false,days:Number($('bulkDays').value)||0,cost:Number($('bulkCost').value)||0,location:$('bulkLocation').value.trim(),provider:'',certificate:'none',notes:'Über Mehrfachzuweisung angelegt'}));closeModal('bulkModal');save()}
+function selectedCoverageTemplate(){
+  let title=$('coverageTraining')?.value||'';
+  if(!title)return null;
+  let yf=$('coverageYear')?.value||'all';
+  let candidates=data.trainings.filter(t=>t.title===title&&(yf==='all'||String(new Date(t.date+'T12:00:00').getFullYear())===yf));
+  if(!candidates.length)candidates=data.trainings.filter(t=>t.title===title);
+  if(!candidates.length)return null;
+  return [...candidates].sort((a,b)=>{
+    let ap=statusOf(a)==='planned'?0:1,bp=statusOf(b)==='planned'?0:1;
+    if(ap!==bp)return ap-bp;
+    return b.date.localeCompare(a.date);
+  })[0];
+}
+function applyTrainingTemplateToModal(t,employeeId){
+  if(!t)return;
+  fillSelectors();
+  $('trainingModalTitle').textContent='Fortbildung für Mitarbeiter hinzufügen';
+  $('trEmployee').value=employeeId;
+  $('trType').value=t.type||data.types[0]?.name||'';
+  $('trTitle').value=t.title||'';
+  $('trDate').value=t.date||today();
+  $('trValidUntil').value=t.validUntil||'';
+  $('trDays').value=t.days??1;
+  $('trCost').value=t.cost??0;
+  $('trLocation').value=t.location||'';
+  $('trProvider').value=t.provider||'';
+  $('trStatus').value=t.status||'planned';
+  $('trMandatory').value=t.mandatory?'yes':'no';
+  $('trIndividual').value=t.individual?'yes':'no';
+  $('trCertificate').value=t.certificate||'none';
+  $('trNotes').value=t.notes||'';
+}
+function addEmployeeToCoverage(employeeId){
+  let template=selectedCoverageTemplate();
+  if(!template)return alert('Für diese Fortbildung wurde keine Vorlage gefunden.');
+  editingTrainingId=null;
+  applyTrainingTemplateToModal(template,employeeId);
+  openModal('trainingModal');
+}
+function startTrainingWithTitle(employeeId,title){
+  let template=data.trainings.filter(t=>t.title===title).sort((a,b)=>b.date.localeCompare(a.date))[0];
+  if(template){editingTrainingId=null;applyTrainingTemplateToModal(template,employeeId);openModal('trainingModal');return;}
+  newTrainingForEmployee(employeeId);$('trTitle').value=title;
+}
+function openBulkAssign(prefillTitle='',template=null){
+  let active=data.employees.filter(e=>e.active!=='inactive').sort((a,b)=>(a.last+' '+a.first).localeCompare(b.last+' '+b.first));
+  if(!active.length)return alert('Lege zuerst Mitarbeiter an.');
+  fillSelectors();
+  $('bulkTitle').value=template?.title||prefillTitle||'';
+  $('bulkType').value=template?.type||data.types[0]?.name||'';
+  $('bulkDate').value=template?.date||today();
+  $('bulkValidUntil').value=template?.validUntil||'';
+  $('bulkDays').value=template?.days??1;
+  $('bulkCost').value=template?.cost??0;
+  $('bulkLocation').value=template?.location||'';
+  $('bulkProvider').value=template?.provider||'';
+  $('bulkStatus').value=template?.status||'planned';
+  $('bulkMandatory').value=template?.mandatory?'yes':'no';
+  $('bulkIndividual').value=template?.individual?'yes':'no';
+  $('bulkCertificate').value=template?.certificate||'none';
+  $('bulkNotes').value=template?.notes||'';
+  $('bulkPeople').innerHTML=active.map(e=>`<label class="checkPerson"><input type="checkbox" value="${e.id}"><span>${e.first} ${e.last}<br><small>${e.role||''}</small></span></label>`).join('');
+  openModal('bulkModal');
+}
+function openCoverageAssign(){
+  let template=selectedCoverageTemplate();
+  if(!template)return alert('Bitte zuerst eine Fortbildung mit vorhandenem Datensatz auswählen.');
+  openBulkAssign(template.title,template);
+}
+function saveBulkAssign(){
+  let ids=[...document.querySelectorAll('#bulkPeople input:checked')].map(x=>x.value),title=$('bulkTitle').value.trim(),date=$('bulkDate').value;
+  if(!title||!date)return alert('Fortbildung und Datum fehlen.');
+  if(!ids.length)return alert('Wähle mindestens einen Mitarbeiter aus.');
+  ids.forEach(employeeId=>data.trainings.push({
+    id:uid(),employeeId,type:$('bulkType').value,title,date,validUntil:$('bulkValidUntil').value,status:$('bulkStatus').value,
+    mandatory:$('bulkMandatory').value==='yes',individual:$('bulkIndividual').value==='yes',days:Number($('bulkDays').value)||0,
+    cost:Number($('bulkCost').value)||0,location:$('bulkLocation').value.trim(),provider:$('bulkProvider').value.trim(),
+    certificate:$('bulkCertificate').value,notes:$('bulkNotes').value.trim()
+  }));
+  closeModal('bulkModal');save();
+}
 function renderAll(){fillSelectors();renderStats();renderLegend();renderCalendar();renderDashboardUpcoming();renderTeamFocus();renderEmployees();renderHistory();renderTypes();renderYear();renderBudget()}
 window.removeEmployee=id=>{if(confirm('Mitarbeiter und zugehörige Fortbildungen wirklich löschen?')){data.employees=data.employees.filter(e=>e.id!==id);data.trainings=data.trainings.filter(t=>t.employeeId!==id);save()}};window.removeTraining=id=>{if(confirm('Fortbildung wirklich löschen?')){data.trainings=data.trainings.filter(t=>t.id!==id);save()}};window.renameType=(i,val)=>{let old=data.types[i].name,n=val.trim()||old;data.types[i].name=n;data.trainings.forEach(t=>{if(t.type===old)t.type=n});save()};window.changeTypeColor=(i,val)=>{data.types[i].color=val;save()};window.removeType=i=>{if(data.types.length<=1)return alert('Mindestens eine Fortbildungsart muss vorhanden bleiben.');let old=data.types[i].name;if(data.trainings.some(t=>t.type===old)&&!confirm('Diese Kategorie wird bereits verwendet. Trotzdem entfernen?'))return;data.types.splice(i,1);save()};
 $('addEmployeeBtn').onclick=$('quickEmployee').onclick=newEmployee;$('addTrainingBtn').onclick=()=>newTrainingForEmployee();
