@@ -29,7 +29,7 @@ button,input,select,textarea{font:inherit}.app{min-height:100vh;display:grid;gri
 
 .tableWrap{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}.tableWrap .historyTable{min-width:980px}.sectionTitle>*{min-width:0}.topbar>*{min-width:0}.actions{justify-content:flex-end}.monthEntry strong{font-weight:750}.filterSummary{line-height:1.4}
 </style>
-<script type="text/javascript" nonce="c10bc2715af944d3b1a8796fd7d" src="//local.adguard.org?ts=1789202035093&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_0000000035b88210b66cb9381a1b5597%26ts%3D497001%26p%3Dfs%26cid%3D1%26sig%3D5e68b0e0981c2cf3827ebd2c111212399af57d30be0f9b5d823865278fcbc0f9%26v%3D0&amp;app=com.apple.Safari&amp;css=3&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1"></script><script type="text/javascript" nonce="c10bc2715af944d3b1a8796fd7d" src="//local.adguard.org?ts=1789202035093&amp;name=AdGuard%20Assistant&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script></head>
+<script type="text/javascript" nonce="3d528af12bd44f6ab855e2d15b2" src="//local.adguard.org?ts=1789199154791&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_000000001ac8821093d20441e0086bd6%26fn%3Dindex.html%26cd%3Dattachment%26ts%3D497003%26p%3Dfs%26cid%3D1%26sig%3D5155843dcdef2436cde4b146d5aaf3666b40744e656dd2a5d01cc807bc428c6e%26v%3D0&amp;app=com.apple.Safari&amp;css=3&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1"></script><script type="text/javascript" nonce="3d528af12bd44f6ab855e2d15b2" src="//local.adguard.org?ts=1789199154791&amp;name=AdGuard%20Assistant&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script></head>
 <body>
 <div class="app">
   <aside class="sidebar">
@@ -100,7 +100,7 @@ button,input,select,textarea{font:inherit}.app{min-height:100vh;display:grid;gri
       <div class="card section trainingCoverage">
         <div class="coverageHead">
           <div><h2 style="margin:0">Fortbildungsstatus im Team</h2><div class="sub">Wiederkehrende Fortbildung auswählen und sofort sehen, wer absolviert hat, geplant ist oder noch fehlt.</div></div>
-          <div class="controls"><select class="select" id="coverageTraining"></select><select class="select" id="coverageYear"></select></div>
+          <div class="controls"><select class="select" id="coverageTraining"></select><select class="select" id="coverageYear"></select><select class="select" id="coverageSort"><option value="name-asc">Name A → Z</option><option value="name-desc">Name Z → A</option><option value="date-asc">Datum früh → spät</option><option value="date-desc">Datum spät → früh</option><option value="role-asc">Funktion A → Z</option><option value="status">Status</option></select><button class="smallBtn" id="coverageAddBtn">+ Mitarbeiter hinzufügen</button></div>
         </div>
         <div id="coverageContent"></div>
       </div>
@@ -160,8 +160,12 @@ button,input,select,textarea{font:inherit}.app{min-height:100vh;display:grid;gri
 <div class="modalBackdrop" id="bulkModal"><div class="modal"><h3>Fortbildung mehrfach zuweisen</h3><div class="formGrid">
   <div class="field full"><label>Fortbildung</label><input class="input" id="bulkTitle" placeholder="z. B. BLS Refresher"></div>
   <div class="field"><label>Fortbildungsart</label><select class="select" id="bulkType"></select></div><div class="field"><label>Datum</label><input class="input" id="bulkDate" type="date"></div>
-  <div class="field"><label>Tage pro Mitarbeiter</label><input class="input" id="bulkDays" type="number" min="0" step="0.5" value="1"></div><div class="field"><label>Kosten pro Mitarbeiter (€)</label><input class="input" id="bulkCost" type="number" min="0" step="0.01" value="0"></div>
-  <div class="field"><label>Ort</label><input class="input" id="bulkLocation"></div><div class="field"><label>Status</label><select class="select" id="bulkStatus"><option value="planned">geplant</option><option value="done">absolviert</option></select></div>
+  <div class="field"><label>Gültig bis</label><input class="input" id="bulkValidUntil" type="date"></div><div class="field"><label>Tage pro Mitarbeiter</label><input class="input" id="bulkDays" type="number" min="0" step="0.5" value="1"></div>
+  <div class="field"><label>Kosten pro Mitarbeiter (€)</label><input class="input" id="bulkCost" type="number" min="0" step="0.01" value="0"></div><div class="field"><label>Ort</label><input class="input" id="bulkLocation"></div>
+  <div class="field"><label>Anbieter / Veranstalter</label><input class="input" id="bulkProvider"></div><div class="field"><label>Status</label><select class="select" id="bulkStatus"><option value="planned">geplant</option><option value="done">absolviert</option></select></div>
+  <div class="field"><label>Pflichtfortbildung</label><select class="select" id="bulkMandatory"><option value="no">Nein</option><option value="yes">Ja</option></select></div><div class="field"><label>Individualisierte Fortbildung</label><select class="select" id="bulkIndividual"><option value="no">Nein</option><option value="yes">Ja</option></select></div>
+  <div class="field"><label>Nachweis / Zertifikat</label><select class="select" id="bulkCertificate"><option value="none">nicht erforderlich</option><option value="missing">fehlt</option><option value="available">vorhanden</option></select></div><div class="field"></div>
+  <div class="field full"><label>Notizen</label><textarea class="textarea" id="bulkNotes"></textarea></div>
   <div class="field full"><label>Mitarbeiter auswählen</label><div class="bulkPeople" id="bulkPeople"></div></div>
 </div><div class="modalActions"><button class="btn" data-close="bulkModal">Abbrechen</button><button class="btn primary" id="saveBulkTraining">Für Auswahl anlegen</button></div></div></div>
 
@@ -226,14 +230,37 @@ function renderHistory(){
 }
 function renderCoverage(){
   if(!$('coverageContent'))return;
-  let title=$('coverageTraining')?.value||'';let yf=$('coverageYear')?.value||'all';let active=data.employees.filter(e=>e.active!=='inactive');
-  if(!title){$('coverageContent').innerHTML='<div class="empty">Sobald Fortbildungen erfasst sind, erscheint hier die Teamabdeckung.</div>';return;}
+  let title=$('coverageTraining')?.value||'';
+  let yf=$('coverageYear')?.value||'all';
+  let sort=$('coverageSort')?.value||'name-asc';
+  let active=data.employees.filter(e=>e.active!=='inactive');
+  if(!title){
+    $('coverageContent').innerHTML='<div class="empty">Sobald Fortbildungen erfasst sind, erscheint hier die Teamabdeckung.</div>';
+    if($('coverageAddBtn'))$('coverageAddBtn').disabled=true;
+    return;
+  }
+  if($('coverageAddBtn'))$('coverageAddBtn').disabled=false;
   let rows=data.trainings.filter(t=>t.title===title&&(yf==='all'||String(new Date(t.date+'T12:00:00').getFullYear())===yf));
   let done=[],planned=[],missing=[];
-  active.forEach(e=>{let erows=rows.filter(t=>t.employeeId===e.id).sort((a,b)=>b.date.localeCompare(a.date)),p=erows.filter(t=>statusOf(t)==='planned').sort((a,b)=>a.date.localeCompare(b.date))[0],d=erows.filter(t=>statusOf(t)==='done').sort((a,b)=>b.date.localeCompare(a.date))[0];if(p)planned.push({e,t:p});else if(d)done.push({e,t:d});else missing.push({e,t:null})});
-  let total=active.length,covered=done.length+planned.length,pct=total?Math.round(covered/total*100):0,cost=rows.reduce((s,t)=>s+(Number(t.cost)||0),0);
-  let col=(name,arr,cls,empty)=>`<div class="coverageColumn"><h3>${name}<span class="badge ${cls}">${arr.length}</span></h3>${arr.length?arr.map(x=>`<div class="coveragePerson"><button onclick="showEmployeeDetails('${x.e.id}')"><strong>${x.e.first} ${x.e.last}</strong><br><small>${x.t?fmt(x.t.date)+(x.t.location?' · '+x.t.location:''):'noch kein Eintrag'}</small></button>${x.t?`<button class="smallBtn" onclick="editTraining('${x.t.id}')">✎</button>`:`<button class="smallBtn" onclick="startTrainingWithTitle('${x.e.id}',${JSON.stringify(title)})">+</button>`}</div>`).join(''):`<div class="empty">${empty}</div>`}</div>`;
-  $('coverageContent').innerHTML=`<div class="coverageStats"><div class="coverageStat"><small>Teamabdeckung</small><strong>${pct} %</strong></div><div class="coverageStat"><small>Absolviert</small><strong>${done.length}</strong></div><div class="coverageStat"><small>Geplant</small><strong>${planned.length}</strong></div><div class="coverageStat"><small>Noch offen</small><strong>${missing.length}</strong></div></div><div class="filterSummary" style="margin-top:10px">${yf==='all'?'Alle Jahre':yf} · ${rows.length} Einträge · ${money(cost)} Gesamtkosten</div><div class="coverageGrid">${col('Absolviert',done,'good','Noch niemand absolviert.')}${col('Geplant',planned,'warn','Niemand geplant.')}${col('Noch ohne Eintrag',missing,'danger','Alle Mitarbeiter sind abgedeckt.')}</div>`;
+  active.forEach(e=>{
+    let erows=rows.filter(t=>t.employeeId===e.id).sort((a,b)=>b.date.localeCompare(a.date));
+    let p=erows.filter(t=>statusOf(t)==='planned').sort((a,b)=>a.date.localeCompare(b.date))[0];
+    let d=erows.filter(t=>statusOf(t)==='done').sort((a,b)=>b.date.localeCompare(a.date))[0];
+    if(p)planned.push({e,t:p,status:'planned'});
+    else if(d)done.push({e,t:d,status:'done'});
+    else missing.push({e,t:null,status:'missing'});
+  });
+  const sorter=(a,b)=>{
+    if(sort==='name-desc')return (b.e.last+' '+b.e.first).localeCompare(a.e.last+' '+a.e.first,'de');
+    if(sort==='date-asc')return (a.t?.date||'9999-12-31').localeCompare(b.t?.date||'9999-12-31');
+    if(sort==='date-desc')return (b.t?.date||'0000-00-00').localeCompare(a.t?.date||'0000-00-00');
+    if(sort==='role-asc')return (a.e.role||'').localeCompare(b.e.role||'','de')||(a.e.last+' '+a.e.first).localeCompare(b.e.last+' '+b.e.first,'de');
+    return (a.e.last+' '+a.e.first).localeCompare(b.e.last+' '+b.e.first,'de');
+  };
+  done.sort(sorter);planned.sort(sorter);missing.sort(sorter);
+  let total=active.length,covered=done.length+planned.length,pct=total?Math.round(covered/total*100):0,cost=rows.reduce((sum,t)=>sum+(Number(t.cost)||0),0);
+  let col=(name,arr,cls,empty)=>`<div class="coverageColumn"><h3>${name}<span class="badge ${cls}">${arr.length}</span></h3>${arr.length?arr.map(x=>`<div class="coveragePerson"><button onclick="showEmployeeDetails('${x.e.id}')"><strong>${x.e.first} ${x.e.last}</strong><br><small>${x.e.role?x.e.role+' · ':''}${x.t?fmt(x.t.date)+(x.t.location?' · '+x.t.location:''):'noch kein Eintrag'}</small></button>${x.t?`<button class="smallBtn" title="Eintrag bearbeiten" onclick="editTraining('${x.t.id}')">✎</button>`:`<button class="smallBtn" title="Zur ausgewählten Fortbildung hinzufügen" onclick="addEmployeeToCoverage('${x.e.id}')">+</button>`}</div>`).join(''):`<div class="empty">${empty}</div>`}</div>`;
+  $('coverageContent').innerHTML=`<div class="coverageStats"><div class="coverageStat"><small>Teamabdeckung</small><strong>${pct} %</strong></div><div class="coverageStat"><small>Absolviert</small><strong>${done.length}</strong></div><div class="coverageStat"><small>Geplant</small><strong>${planned.length}</strong></div><div class="coverageStat"><small>Noch offen</small><strong>${missing.length}</strong></div></div><div class="filterSummary" style="margin-top:10px">${yf==='all'?'Alle Jahre':yf} · ${rows.length} Einträge · ${money(cost)} Gesamtkosten · Sortierung: ${$('coverageSort')?.selectedOptions[0]?.textContent||'Name A → Z'}</div><div class="coverageGrid">${col('Absolviert',done,'good','Noch niemand absolviert.')}${col('Geplant',planned,'warn','Niemand geplant.')}${col('Noch ohne Eintrag',missing,'danger','Alle Mitarbeiter sind abgedeckt.')}</div>`;
 }
 function renderTypes(){$('typeList').innerHTML=data.types.map((t,i)=>`<div class="typeRow"><input type="color" value="${t.color}" onchange="changeTypeColor(${i},this.value)"><input class="input" value="${t.name}" onchange="renameType(${i},this.value)"><button class="smallBtn dangerText" onclick="removeType(${i})">×</button></div>`).join('')}
 function renderYear(){let g=$('yearGrid');g.innerHTML='';let months=['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'],filtered=filteredYearTrainings();if($('yearFilterSummary'))$('yearFilterSummary').textContent=`${filtered.length} Einträge · ${new Set(filtered.map(t=>t.employeeId)).size} Mitarbeiter · ${filtered.reduce((s,t)=>s+(Number(t.days)||0),0).toLocaleString('de-DE')} Tage · ${money(filtered.reduce((s,t)=>s+(Number(t.cost)||0),0))}`;for(let m=0;m<12;m++){let month=document.createElement('div');month.className='monthMini clickableMonth';let mt=filtered.filter(t=>new Date(t.date+'T12:00:00').getMonth()===m).sort((a,b)=>a.date.localeCompare(b.date));month.onclick=()=>showTrainingCollection(months[m]+' '+overviewYear,`${mt.length} gefilterte Termine`,mt);let cost=mt.reduce((s,t)=>s+(Number(t.cost)||0),0);month.innerHTML=`<h3><span>${months[m]}</span><span class="badge">${mt.length} · ${money(cost)}</span></h3><div class="miniWeeks"></div><div class="monthEntries">${mt.slice(0,4).map(t=>{let e=data.employees.find(x=>x.id===t.employeeId);return `<div class="monthEntry" onclick="event.stopPropagation();editTraining('${t.id}')"><i class="typeDot" style="background:${typeObj(t.type).color}"></i><span class="text"><strong>${e?e.last:'?'}</strong> · ${t.title}</span></div>`}).join('')}${mt.length>4?`<div class="editHint">+ ${mt.length-4} weitere</div>`:''}</div>`;let mini=month.querySelector('.miniWeeks'),first=new Date(overviewYear,m,1),offset=(first.getDay()+6)%7,days=new Date(overviewYear,m+1,0).getDate();for(let i=0;i<offset;i++)mini.innerHTML+='<div class="miniCell" style="visibility:hidden"></div>';for(let d=1;d<=days;d++){let iso=`${overviewYear}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`,ev=mt.filter(t=>t.date===iso),cls='miniCell'+(ev.length?' has':'')+(ev.length>1?' hot':'')+(ev.some(t=>t.mandatory)?' mand':'')+(ev.some(t=>t.cost>0)?' costly':'');mini.innerHTML+=`<div class="${cls}" ${ev.length?`onclick="event.stopPropagation();showTrainingCollection('Planung am ${fmt(iso)}','${ev.length} gefilterte Termine',filteredYearTrainings().filter(t=>t.date==='${iso}'))"`:''} title="${d}. ${months[m]} · ${ev.length} Termin(e)"></div>`}g.appendChild(month)}renderYearSummary(filtered)}
@@ -248,16 +275,94 @@ function editEmployee(id){let e=data.employees.find(x=>x.id===id);if(!e)return;e
 function newEmployee(){editingEmployeeId=null;$('employeeModalTitle').textContent='Mitarbeiter anlegen';$('empFirst').value='';$('empLast').value='';$('empRole').value='';$('empActive').value='active';openModal('employeeModal')}
 function editTraining(id){let t=data.trainings.find(x=>x.id===id);if(!t)return;editingTrainingId=id;fillSelectors();$('trainingModalTitle').textContent='Fortbildung bearbeiten';$('trEmployee').value=t.employeeId;$('trType').value=t.type;$('trTitle').value=t.title||'';$('trDate').value=t.date||'';$('trValidUntil').value=t.validUntil||'';$('trDays').value=t.days??1;$('trCost').value=t.cost??0;$('trLocation').value=t.location||'';$('trProvider').value=t.provider||'';$('trStatus').value=t.status||'planned';$('trMandatory').value=t.mandatory?'yes':'no';$('trIndividual').value=t.individual?'yes':'no';$('trCertificate').value=t.certificate||'none';$('trNotes').value=t.notes||'';openModal('trainingModal')}
 function newTrainingForEmployee(id=null){if(!data.employees.filter(e=>e.active!=='inactive').length)return alert('Lege zuerst mindestens einen aktiven Mitarbeiter an.');editingTrainingId=null;fillSelectors();$('trainingModalTitle').textContent='Fortbildung erfassen';$('trEmployee').value=id||$('trEmployee').value;$('trType').value=data.types[0]?.name||'';$('trTitle').value='';$('trDate').value=today();$('trValidUntil').value='';$('trDays').value='1';$('trCost').value='0';$('trLocation').value='';$('trProvider').value='';$('trStatus').value='planned';$('trMandatory').value='no';$('trIndividual').value='no';$('trCertificate').value='none';$('trNotes').value='';openModal('trainingModal')}
-function startTrainingWithTitle(employeeId,title){newTrainingForEmployee(employeeId);$('trTitle').value=title;}
-function openBulkAssign(){let active=data.employees.filter(e=>e.active!=='inactive').sort((a,b)=>(a.last+' '+a.first).localeCompare(b.last+' '+b.first));if(!active.length)return alert('Lege zuerst Mitarbeiter an.');fillSelectors();$('bulkTitle').value='';$('bulkDate').value=today();$('bulkDays').value='1';$('bulkCost').value='0';$('bulkLocation').value='';$('bulkStatus').value='planned';$('bulkPeople').innerHTML=active.map(e=>`<label class="checkPerson"><input type="checkbox" value="${e.id}"><span>${e.first} ${e.last}<br><small>${e.role||''}</small></span></label>`).join('');openModal('bulkModal')}
-function saveBulkAssign(){let ids=[...document.querySelectorAll('#bulkPeople input:checked')].map(x=>x.value),title=$('bulkTitle').value.trim(),date=$('bulkDate').value;if(!title||!date)return alert('Fortbildung und Datum fehlen.');if(!ids.length)return alert('Wähle mindestens einen Mitarbeiter aus.');ids.forEach(employeeId=>data.trainings.push({id:uid(),employeeId,type:$('bulkType').value,title,date,validUntil:'',status:$('bulkStatus').value,mandatory:false,individual:false,days:Number($('bulkDays').value)||0,cost:Number($('bulkCost').value)||0,location:$('bulkLocation').value.trim(),provider:'',certificate:'none',notes:'Über Mehrfachzuweisung angelegt'}));closeModal('bulkModal');save()}
+function selectedCoverageTemplate(){
+  let title=$('coverageTraining')?.value||'';
+  if(!title)return null;
+  let yf=$('coverageYear')?.value||'all';
+  let candidates=data.trainings.filter(t=>t.title===title&&(yf==='all'||String(new Date(t.date+'T12:00:00').getFullYear())===yf));
+  if(!candidates.length)candidates=data.trainings.filter(t=>t.title===title);
+  if(!candidates.length)return null;
+  return [...candidates].sort((a,b)=>{
+    let ap=statusOf(a)==='planned'?0:1,bp=statusOf(b)==='planned'?0:1;
+    if(ap!==bp)return ap-bp;
+    return b.date.localeCompare(a.date);
+  })[0];
+}
+function applyTrainingTemplateToModal(t,employeeId){
+  if(!t)return;
+  fillSelectors();
+  $('trainingModalTitle').textContent='Fortbildung für Mitarbeiter hinzufügen';
+  $('trEmployee').value=employeeId;
+  $('trType').value=t.type||data.types[0]?.name||'';
+  $('trTitle').value=t.title||'';
+  $('trDate').value=t.date||today();
+  $('trValidUntil').value=t.validUntil||'';
+  $('trDays').value=t.days??1;
+  $('trCost').value=t.cost??0;
+  $('trLocation').value=t.location||'';
+  $('trProvider').value=t.provider||'';
+  $('trStatus').value=t.status||'planned';
+  $('trMandatory').value=t.mandatory?'yes':'no';
+  $('trIndividual').value=t.individual?'yes':'no';
+  $('trCertificate').value=t.certificate||'none';
+  $('trNotes').value=t.notes||'';
+}
+function addEmployeeToCoverage(employeeId){
+  let template=selectedCoverageTemplate();
+  if(!template)return alert('Für diese Fortbildung wurde keine Vorlage gefunden.');
+  editingTrainingId=null;
+  applyTrainingTemplateToModal(template,employeeId);
+  openModal('trainingModal');
+}
+function startTrainingWithTitle(employeeId,title){
+  let template=data.trainings.filter(t=>t.title===title).sort((a,b)=>b.date.localeCompare(a.date))[0];
+  if(template){editingTrainingId=null;applyTrainingTemplateToModal(template,employeeId);openModal('trainingModal');return;}
+  newTrainingForEmployee(employeeId);$('trTitle').value=title;
+}
+function openBulkAssign(prefillTitle='',template=null){
+  let active=data.employees.filter(e=>e.active!=='inactive').sort((a,b)=>(a.last+' '+a.first).localeCompare(b.last+' '+b.first));
+  if(!active.length)return alert('Lege zuerst Mitarbeiter an.');
+  fillSelectors();
+  $('bulkTitle').value=template?.title||prefillTitle||'';
+  $('bulkType').value=template?.type||data.types[0]?.name||'';
+  $('bulkDate').value=template?.date||today();
+  $('bulkValidUntil').value=template?.validUntil||'';
+  $('bulkDays').value=template?.days??1;
+  $('bulkCost').value=template?.cost??0;
+  $('bulkLocation').value=template?.location||'';
+  $('bulkProvider').value=template?.provider||'';
+  $('bulkStatus').value=template?.status||'planned';
+  $('bulkMandatory').value=template?.mandatory?'yes':'no';
+  $('bulkIndividual').value=template?.individual?'yes':'no';
+  $('bulkCertificate').value=template?.certificate||'none';
+  $('bulkNotes').value=template?.notes||'';
+  $('bulkPeople').innerHTML=active.map(e=>`<label class="checkPerson"><input type="checkbox" value="${e.id}"><span>${e.first} ${e.last}<br><small>${e.role||''}</small></span></label>`).join('');
+  openModal('bulkModal');
+}
+function openCoverageAssign(){
+  let template=selectedCoverageTemplate();
+  if(!template)return alert('Bitte zuerst eine Fortbildung mit vorhandenem Datensatz auswählen.');
+  openBulkAssign(template.title,template);
+}
+function saveBulkAssign(){
+  let ids=[...document.querySelectorAll('#bulkPeople input:checked')].map(x=>x.value),title=$('bulkTitle').value.trim(),date=$('bulkDate').value;
+  if(!title||!date)return alert('Fortbildung und Datum fehlen.');
+  if(!ids.length)return alert('Wähle mindestens einen Mitarbeiter aus.');
+  ids.forEach(employeeId=>data.trainings.push({
+    id:uid(),employeeId,type:$('bulkType').value,title,date,validUntil:$('bulkValidUntil').value,status:$('bulkStatus').value,
+    mandatory:$('bulkMandatory').value==='yes',individual:$('bulkIndividual').value==='yes',days:Number($('bulkDays').value)||0,
+    cost:Number($('bulkCost').value)||0,location:$('bulkLocation').value.trim(),provider:$('bulkProvider').value.trim(),
+    certificate:$('bulkCertificate').value,notes:$('bulkNotes').value.trim()
+  }));
+  closeModal('bulkModal');save();
+}
 function renderAll(){fillSelectors();renderStats();renderLegend();renderCalendar();renderDashboardUpcoming();renderTeamFocus();renderEmployees();renderHistory();renderTypes();renderYear();renderBudget()}
 window.removeEmployee=id=>{if(confirm('Mitarbeiter und zugehörige Fortbildungen wirklich löschen?')){data.employees=data.employees.filter(e=>e.id!==id);data.trainings=data.trainings.filter(t=>t.employeeId!==id);save()}};window.removeTraining=id=>{if(confirm('Fortbildung wirklich löschen?')){data.trainings=data.trainings.filter(t=>t.id!==id);save()}};window.renameType=(i,val)=>{let old=data.types[i].name,n=val.trim()||old;data.types[i].name=n;data.trainings.forEach(t=>{if(t.type===old)t.type=n});save()};window.changeTypeColor=(i,val)=>{data.types[i].color=val;save()};window.removeType=i=>{if(data.types.length<=1)return alert('Mindestens eine Fortbildungsart muss vorhanden bleiben.');let old=data.types[i].name;if(data.trainings.some(t=>t.type===old)&&!confirm('Diese Kategorie wird bereits verwendet. Trotzdem entfernen?'))return;data.types.splice(i,1);save()};
 $('addEmployeeBtn').onclick=$('quickEmployee').onclick=newEmployee;$('addTrainingBtn').onclick=()=>newTrainingForEmployee();
 $('saveEmployee').onclick=()=>{if(!$('empFirst').value.trim()||!$('empLast').value.trim())return alert('Vorname und Nachname fehlen.');let payload={first:$('empFirst').value.trim(),last:$('empLast').value.trim(),role:$('empRole').value.trim(),active:$('empActive').value};if(editingEmployeeId){let e=data.employees.find(x=>x.id===editingEmployeeId);if(e)Object.assign(e,payload)}else data.employees.push({id:uid(),...payload});editingEmployeeId=null;closeModal('employeeModal');save()};
 $('saveTraining').onclick=()=>{if(!$('trTitle').value.trim()||!$('trDate').value)return alert('Titel und Datum fehlen.');let payload={employeeId:$('trEmployee').value,type:$('trType').value,title:$('trTitle').value.trim(),date:$('trDate').value,validUntil:$('trValidUntil').value,status:$('trStatus').value,mandatory:$('trMandatory').value==='yes',individual:$('trIndividual').value==='yes',days:Number($('trDays').value)||0,cost:Number($('trCost').value)||0,location:$('trLocation').value.trim(),provider:$('trProvider').value.trim(),certificate:$('trCertificate').value,notes:$('trNotes').value.trim()};if(editingTrainingId){let t=data.trainings.find(x=>x.id===editingTrainingId);if(t)Object.assign(t,payload)}else data.trainings.push({id:uid(),...payload});editingTrainingId=null;closeModal('trainingModal');save()};
 $('addTypeBtn').onclick=()=>{let v=$('newType').value.trim();if(v&&!data.types.some(t=>t.name===v)){data.types.push({name:v,color:$('newTypeColor').value});$('newType').value='';save()}};$('annualBudget').onchange=()=>{data.settings.annualBudget=Math.max(0,Number($('annualBudget').value)||0);save()};
-$('employeeSearch').oninput=renderEmployees;$('employeeSort').onchange=renderEmployees;$('historyFilter').onchange=renderHistory;$('historyTypeFilter').onchange=renderHistory;$('historyTrainingFilter').onchange=renderHistory;$('historyStatusFilter').onchange=renderHistory;$('historySearch').oninput=renderHistory;$('coverageTraining').onchange=renderCoverage;$('coverageYear').onchange=renderCoverage;$('historySortSelect').onchange=()=>{let [key,dir]=$('historySortSelect').value.split('-');historySort={key,dir};renderHistory()};$('clearHistoryFilters').onclick=()=>{$('historySearch').value='';$('historyFilter').value='all';$('historyTrainingFilter').value='all';$('historyTypeFilter').value='all';$('historyStatusFilter').value='all';$('historySortSelect').value='date-desc';historySort={key:'date',dir:'desc'};renderHistory()};document.querySelectorAll('th.sortable').forEach(th=>th.onclick=()=>{let k=th.dataset.sort;historySort={key:k,dir:historySort.key===k&&historySort.dir==='asc'?'desc':'asc'};if($('historySortSelect')){let val=`${historySort.key}-${historySort.dir}`;if([...$('historySortSelect').options].some(o=>o.value===val))$('historySortSelect').value=val;}renderHistory()});
+$('employeeSearch').oninput=renderEmployees;$('employeeSort').onchange=renderEmployees;$('historyFilter').onchange=renderHistory;$('historyTypeFilter').onchange=renderHistory;$('historyTrainingFilter').onchange=renderHistory;$('historyStatusFilter').onchange=renderHistory;$('historySearch').oninput=renderHistory;$('coverageTraining').onchange=renderCoverage;$('coverageYear').onchange=renderCoverage;$('coverageSort').onchange=renderCoverage;$('coverageAddBtn').onclick=openCoverageAssign;$('historySortSelect').onchange=()=>{let [key,dir]=$('historySortSelect').value.split('-');historySort={key,dir};renderHistory()};$('clearHistoryFilters').onclick=()=>{$('historySearch').value='';$('historyFilter').value='all';$('historyTrainingFilter').value='all';$('historyTypeFilter').value='all';$('historyStatusFilter').value='all';$('historySortSelect').value='date-desc';historySort={key:'date',dir:'desc'};renderHistory()};document.querySelectorAll('th.sortable').forEach(th=>th.onclick=()=>{let k=th.dataset.sort;historySort={key:k,dir:historySort.key===k&&historySort.dir==='asc'?'desc':'asc'};if($('historySortSelect')){let val=`${historySort.key}-${historySort.dir}`;if([...$('historySortSelect').options].some(o=>o.value===val))$('historySortSelect').value=val;}renderHistory()});
 $('monthSelect').onchange=()=>{current.setMonth(+$('monthSelect').value);renderCalendar()};$('yearSelect').onchange=()=>{current.setFullYear(+$('yearSelect').value);renderCalendar()};$('prevMonth').onclick=()=>{current.setMonth(current.getMonth()-1);renderAll()};$('nextMonth').onclick=()=>{current.setMonth(current.getMonth()+1);renderAll()};$('yearOverviewSelect').onchange=()=>{overviewYear=+$('yearOverviewSelect').value;renderYear()};$('prevYear').onclick=()=>{overviewYear--;renderAll()};$('nextYear').onclick=()=>{overviewYear++;renderAll()};$('budgetYearSelect').onchange=()=>{budgetYear=+$('budgetYearSelect').value;renderBudget()};$('yearSearch').oninput=renderYear;$('yearTrainingFilter').onchange=renderYear;$('yearTypeFilter').onchange=renderYear;$('yearEmployeeFilter').onchange=renderYear;$('clearYearFilters').onclick=()=>{$('yearSearch').value='';$('yearTrainingFilter').value='all';$('yearTypeFilter').value='all';$('yearEmployeeFilter').value='all';renderYear()};$('bulkAssignBtn').onclick=openBulkAssign;$('saveBulkTraining').onclick=saveBulkAssign;
 $('exportBtn').onclick=()=>download('fortbildungsplan-homberg.json',JSON.stringify(data,null,2),'application/json');function download(name,content,type){let blob=new Blob([content],{type}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),300)}
 $('csvBtn').onclick=()=>{let esc=v=>'"'+String(v??'').replaceAll('"','""')+'"',head=['Datum','Mitarbeiter','Fortbildung','Art','Tage','Kosten EUR','Ort','Anbieter','Status','Pflicht','Individuell','Nachweis'];let lines=[head,...data.trainings.map(t=>{let e=data.employees.find(x=>x.id===t.employeeId);return[t.date,e?e.first+' '+e.last:'gelöscht',t.title,t.type,t.days,t.cost,t.location,t.provider,statusOf(t),t.mandatory?'Ja':'Nein',t.individual?'Ja':'Nein',t.certificate]})];download('fortbildungen-homberg.csv','\ufeff'+lines.map(r=>r.map(esc).join(';')).join('\n'),'text/csv;charset=utf-8')};
