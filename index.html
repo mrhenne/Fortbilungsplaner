@@ -1,1 +1,141 @@
 
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Fortbildungsplan Homberg</title>
+<style>
+:root{
+  --bg:#f4f8f6; --panel:#ffffff; --panel2:#f8fbf9; --text:#173129; --muted:#6c7f78;
+  --green:#0f8a5f; --green2:#16a370; --green3:#dff4ea; --line:#dbe8e2; --danger:#c74646;
+  --amber:#bd7a11; --blue:#2a6fbb; --shadow:0 12px 30px rgba(31,70,55,.08); --radius:18px;
+}
+*{box-sizing:border-box} body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:linear-gradient(180deg,#edf7f1 0,#f7faf8 260px);color:var(--text)}
+button,input,select{font:inherit}.app{min-height:100vh;display:grid;grid-template-columns:270px 1fr}.sidebar{background:#0d5d43;color:#fff;padding:26px 20px;position:sticky;top:0;height:100vh}.brand{display:flex;gap:12px;align-items:center;margin-bottom:26px}.logo{width:44px;height:44px;border-radius:14px;background:#fff;color:#0d5d43;display:grid;place-items:center;font-weight:900;font-size:19px}.brand small{display:block;opacity:.72;margin-top:2px}.nav{display:grid;gap:8px}.nav button{border:0;background:transparent;color:#d8eee5;text-align:left;padding:12px 14px;border-radius:12px;cursor:pointer}.nav button.active,.nav button:hover{background:rgba(255,255,255,.13);color:#fff}.sidebarFoot{position:absolute;left:20px;right:20px;bottom:22px;font-size:12px;opacity:.75;line-height:1.5}.main{padding:28px 34px 50px;min-width:0}.topbar{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:22px}.topbar h1{font-size:28px;margin:0}.sub{color:var(--muted);margin-top:4px}.actions{display:flex;gap:10px;flex-wrap:wrap}.btn{border:1px solid var(--line);background:#fff;color:var(--text);padding:10px 14px;border-radius:11px;cursor:pointer}.btn:hover{filter:brightness(.98)}.btn.primary{background:var(--green);color:#fff;border-color:var(--green)}.btn.danger{color:var(--danger)}
+.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:18px}.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}.stat{padding:18px}.stat .label{color:var(--muted);font-size:13px}.stat .value{font-size:28px;font-weight:800;margin-top:8px}.stat .hint{font-size:12px;color:var(--muted);margin-top:5px}.contentGrid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(320px,.75fr);gap:18px}.section{padding:19px}.sectionTitle{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:15px}.sectionTitle h2{font-size:17px;margin:0}.sectionTitle .controls{display:flex;gap:8px;align-items:center}.select,.input{border:1px solid var(--line);background:#fff;border-radius:10px;padding:9px 10px;color:var(--text)}
+.calendarHead{display:grid;grid-template-columns:repeat(7,1fr);font-size:12px;color:var(--muted);padding:0 4px 7px}.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}.day{min-height:96px;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:7px;position:relative}.day.out{opacity:.38}.day.today{outline:2px solid var(--green)}.num{font-size:12px;font-weight:700}.event{margin-top:5px;padding:4px 6px;border-radius:7px;background:var(--green3);color:#146744;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}.event.planned{background:#e9f1fb;color:#275d9a}.event.done{background:#e0f5e8;color:#206440}.event.expired{background:#f7e9e9;color:#9a3939}.event.mandatory::before{content:"●";margin-right:4px;color:#e28a00}.legend{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;font-size:11px;color:var(--muted)}.legend span{display:flex;align-items:center;gap:6px}.dot{width:9px;height:9px;border-radius:99px;background:var(--green)}
+.list{display:grid;gap:9px}.item{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:11px;border:1px solid var(--line);border-radius:12px;background:#fff}.person{display:flex;align-items:center;gap:10px}.avatar{width:34px;height:34px;border-radius:50%;background:#dff2e9;display:grid;place-items:center;font-weight:800;color:#17654a}.item small{color:var(--muted);display:block;margin-top:2px}.badge{display:inline-block;padding:4px 8px;border-radius:999px;font-size:11px;background:#eef5f1;color:#43645a}.badge.warn{background:#fff2dc;color:#8d6415}.badge.good{background:#def3e7;color:#236744}
+.yearGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.monthMini{border:1px solid var(--line);border-radius:14px;padding:12px;background:#fff}.monthMini h3{font-size:13px;margin:0 0 10px;display:flex;justify-content:space-between}.miniWeeks{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.miniCell{aspect-ratio:1;border-radius:4px;background:#f1f5f3;position:relative}.miniCell.has{background:#bde8d4}.miniCell.hot{background:#64c59d}.miniCell.mand{box-shadow:inset 0 0 0 1px #d28a19}.miniLabel{font-size:9px;color:var(--muted);text-align:center}.historyTable{width:100%;border-collapse:collapse}.historyTable th,.historyTable td{padding:10px 9px;border-bottom:1px solid var(--line);text-align:left;font-size:13px}.historyTable th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.04em}.empty{padding:24px;text-align:center;color:var(--muted)}
+.view{display:none}.view.active{display:block}.modalBackdrop{position:fixed;inset:0;background:rgba(12,35,27,.42);display:none;align-items:center;justify-content:center;padding:20px;z-index:10}.modalBackdrop.open{display:flex}.modal{width:min(620px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:18px;box-shadow:0 28px 80px rgba(0,0,0,.22);padding:22px}.modal h3{margin:0 0 16px}.formGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{display:grid;gap:6px}.field label{font-size:12px;color:var(--muted)}.field.full{grid-column:1/-1}.modalActions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}.chips{display:flex;gap:8px;flex-wrap:wrap}.chip{border:1px solid var(--line);border-radius:999px;padding:7px 10px;background:#fff;font-size:12px}.settingsGrid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.settingsBox{padding:18px}.typeRow{display:flex;gap:8px;margin-bottom:8px}.typeRow input{flex:1}.smallBtn{padding:7px 9px;border:1px solid var(--line);border-radius:9px;background:#fff;cursor:pointer}.dangerText{color:var(--danger)}
+@media(max-width:1100px){.cards{grid-template-columns:repeat(2,1fr)}.contentGrid{grid-template-columns:1fr}.yearGrid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:760px){.app{grid-template-columns:1fr}.sidebar{height:auto;position:relative;padding:14px}.brand{margin-bottom:12px}.nav{grid-template-columns:repeat(4,1fr);overflow:auto}.nav button{padding:9px;font-size:12px}.sidebarFoot{display:none}.main{padding:18px}.topbar{align-items:flex-start;flex-direction:column}.cards{grid-template-columns:1fr 1fr}.yearGrid{grid-template-columns:repeat(2,1fr)}.formGrid,.settingsGrid{grid-template-columns:1fr}.field.full{grid-column:auto}.day{min-height:72px;padding:4px}.event{font-size:8px}.calendarHead{font-size:10px}}
+</style>
+<script type="text/javascript" nonce="c10bc2715af944d3b1a8796fd7d" src="//local.adguard.org?ts=1789202035093&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_00000000d6c082438711cd46d7ba1802%26ts%3D497000%26p%3Dfs%26cid%3D1%26sig%3Deb5f9ebbd970a4e4af2b6078d4dcc2190eb641e53b39a2407088d82e28ee8cd6%26v%3D0&amp;app=com.apple.Safari&amp;css=3&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1"></script><script type="text/javascript" nonce="c10bc2715af944d3b1a8796fd7d" src="//local.adguard.org?ts=1789202035093&amp;name=AdGuard%20Assistant&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script></head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><div class="logo">H</div><div><strong>Fortbildungsplan</strong><small>Duisburg Homberg</small></div></div>
+    <nav class="nav">
+      <button class="active" data-view="dashboard">Übersicht</button>
+      <button data-view="year">Jahresansicht</button>
+      <button data-view="employees">Mitarbeiter</button>
+      <button data-view="history">Historie</button>
+      <button data-view="settings">Einstellungen</button>
+    </nav>
+    <div class="sidebarFoot">Lokale Version · Daten werden im Browser gespeichert.<br>Ideal als Prototyp vor Mehrbenutzerbetrieb.</div>
+  </aside>
+  <main class="main">
+    <div class="topbar">
+      <div><h1 id="pageTitle">Fort- und Weiterbildungen</h1><div class="sub" id="pageSub">Monatsplanung, Pflichttermine und Teamstatus auf einen Blick.</div></div>
+      <div class="actions"><button class="btn" id="exportBtn">Export JSON</button><button class="btn primary" id="addTrainingBtn">+ Fortbildung</button></div>
+    </div>
+
+    <section id="dashboard" class="view active">
+      <div class="cards" id="stats"></div>
+      <div class="contentGrid">
+        <div class="card section">
+          <div class="sectionTitle"><h2>Monatsansicht</h2><div class="controls"><button class="smallBtn" id="prevMonth">‹</button><select class="select" id="monthSelect"></select><select class="select" id="yearSelect"></select><button class="smallBtn" id="nextMonth">›</button></div></div>
+          <div class="calendarHead"><div>Mo</div><div>Di</div><div>Mi</div><div>Do</div><div>Fr</div><div>Sa</div><div>So</div></div>
+          <div class="calendar" id="calendar"></div>
+          <div class="legend"><span><i class="dot" style="background:#64c59d"></i> absolviert</span><span><i class="dot" style="background:#98bce3"></i> geplant</span><span><i class="dot" style="background:#d59090"></i> abgelaufen</span><span><i class="dot" style="background:#e28a00"></i> Pflichtfortbildung</span></div>
+        </div>
+        <div class="card section">
+          <div class="sectionTitle"><h2>Team im Fokus</h2><button class="smallBtn" id="quickEmployee">+ Mitarbeiter</button></div>
+          <div class="list" id="teamFocus"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="year" class="view">
+      <div class="card section">
+        <div class="sectionTitle"><h2>Jahresübersicht</h2><div class="controls"><button class="smallBtn" id="prevYear">‹</button><select class="select" id="yearOverviewSelect"></select><button class="smallBtn" id="nextYear">›</button></div></div>
+        <div class="yearGrid" id="yearGrid"></div>
+      </div>
+    </section>
+
+    <section id="employees" class="view">
+      <div class="card section">
+        <div class="sectionTitle"><h2>Mitarbeiterverwaltung</h2><div class="controls"><input class="input" id="employeeSearch" placeholder="Suchen…"><button class="btn primary" id="addEmployeeBtn">+ Mitarbeiter</button></div></div>
+        <div class="list" id="employeeList"></div>
+      </div>
+    </section>
+
+    <section id="history" class="view">
+      <div class="card section">
+        <div class="sectionTitle"><h2>Fortbildungsarchiv</h2><div class="controls"><select class="select" id="historyFilter"><option value="all">Alle Jahre</option></select></div></div>
+        <div style="overflow:auto"><table class="historyTable"><thead><tr><th>Datum</th><th>Mitarbeiter</th><th>Fortbildung</th><th>Typ</th><th>Status</th></tr></thead><tbody id="historyBody"></tbody></table></div>
+      </div>
+    </section>
+
+    <section id="settings" class="view">
+      <div class="settingsGrid">
+        <div class="card settingsBox"><h2 style="font-size:17px;margin-top:0">Fortbildungsarten</h2><p class="sub">Eigene Kategorien hinzufügen oder entfernen.</p><div id="typeList"></div><div class="typeRow"><input class="input" id="newType" placeholder="z. B. Reanimation"><button class="smallBtn" id="addTypeBtn">Hinzufügen</button></div></div>
+        <div class="card settingsBox"><h2 style="font-size:17px;margin-top:0">Darstellung & Daten</h2><p class="sub">Die Demo speichert Daten lokal auf diesem Gerät.</p><div class="chips"><button class="chip" id="seedBtn">Beispieldaten laden</button><label class="chip" style="cursor:pointer">JSON importieren<input id="importFile" type="file" accept="application/json" style="display:none"></label><button class="chip dangerText" id="resetBtn">Alle Daten löschen</button></div></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="modalBackdrop" id="employeeModal"><div class="modal"><h3>Mitarbeiter hinzufügen</h3><div class="formGrid"><div class="field"><label>Vorname</label><input class="input" id="empFirst"></div><div class="field"><label>Nachname</label><input class="input" id="empLast"></div><div class="field"><label>Funktion</label><input class="input" id="empRole" placeholder="z. B. Pflegefachkraft"></div><div class="field"><label>Beschäftigung</label><select class="select" id="empActive"><option value="active">Aktiv</option><option value="inactive">Inaktiv</option></select></div></div><div class="modalActions"><button class="btn" data-close="employeeModal">Abbrechen</button><button class="btn primary" id="saveEmployee">Speichern</button></div></div></div>
+
+<div class="modalBackdrop" id="trainingModal"><div class="modal"><h3>Fortbildung eintragen</h3><div class="formGrid"><div class="field"><label>Mitarbeiter</label><select class="select" id="trEmployee"></select></div><div class="field"><label>Fortbildungsart</label><select class="select" id="trType"></select></div><div class="field full"><label>Titel</label><input class="input" id="trTitle" placeholder="z. B. ALS Refresher"></div><div class="field"><label>Datum</label><input class="input" type="date" id="trDate"></div><div class="field"><label>Gültig bis</label><input class="input" type="date" id="trValidUntil"></div><div class="field"><label>Status</label><select class="select" id="trStatus"><option value="planned">Geplant</option><option value="done">Absolviert</option></select></div><div class="field"><label>Pflichtfortbildung</label><select class="select" id="trMandatory"><option value="no">Nein</option><option value="yes">Ja</option></select></div></div><div class="modalActions"><button class="btn" data-close="trainingModal">Abbrechen</button><button class="btn primary" id="saveTraining">Speichern</button></div></div></div>
+
+<script>
+const KEY='homberg_training_app_v1';
+const defaultData={employees:[],types:['Reanimation','Hygiene','Brandschutz','Notfallpflege','Medizinprodukte'],trainings:[]};
+let data=load();
+let current=new Date(); current.setDate(1);
+let overviewYear=new Date().getFullYear();
+function load(){try{return JSON.parse(localStorage.getItem(KEY))||structuredClone(defaultData)}catch{return structuredClone(defaultData)}}
+function save(){localStorage.setItem(KEY,JSON.stringify(data));renderAll()}
+function uid(){return Math.random().toString(36).slice(2)+Date.now().toString(36)}
+function initials(e){return ((e.first?.[0]||'')+(e.last?.[0]||'')).toUpperCase()||'?'}
+function fmt(d){if(!d)return'–';return new Date(d+'T12:00:00').toLocaleDateString('de-DE')}
+function daysUntil(d){return Math.ceil((new Date(d+'T23:59:59')-new Date())/86400000)}
+function statusOf(t){if(t.status==='done'&&t.validUntil&&daysUntil(t.validUntil)<0)return'expired';return t.status}
+function openModal(id){document.getElementById(id).classList.add('open')}
+function closeModal(id){document.getElementById(id).classList.remove('open')}
+document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>closeModal(b.dataset.close));
+document.querySelectorAll('.modalBackdrop').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open')}));
+
+document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById(b.dataset.view).classList.add('active');const map={dashboard:['Fort- und Weiterbildungen','Monatsplanung, Pflichttermine und Teamstatus auf einen Blick.'],year:['Jahresübersicht','Vergangenheit und Zukunft kompakt in einer Jahresmatrix.'],employees:['Mitarbeiter','Team verwalten und individuellen Fortbildungsstand prüfen.'],history:['Historie','Alle Einträge chronologisch nachvollziehen.'],settings:['Einstellungen','Fortbildungsarten und lokale Daten verwalten.']};document.getElementById('pageTitle').textContent=map[b.dataset.view][0];document.getElementById('pageSub').textContent=map[b.dataset.view][1]});
+
+function renderStats(){const active=data.employees.filter(e=>e.active!=='inactive').length;const thisYear=new Date().getFullYear();const yCount=data.trainings.filter(t=>new Date(t.date).getFullYear()===thisYear).length;const mandatory=data.trainings.filter(t=>t.mandatory&&statusOf(t)!=='done').length;const expiring=data.trainings.filter(t=>t.validUntil&&daysUntil(t.validUntil)>=0&&daysUntil(t.validUntil)<=90).length;document.getElementById('stats').innerHTML=`<div class="card stat"><div class="label">Aktive Mitarbeiter</div><div class="value">${active}</div><div class="hint">im aktuellen Team</div></div><div class="card stat"><div class="label">Fortbildungen ${thisYear}</div><div class="value">${yCount}</div><div class="hint">geplant und absolviert</div></div><div class="card stat"><div class="label">Offene Pflichttermine</div><div class="value">${mandatory}</div><div class="hint">noch nicht abgeschlossen</div></div><div class="card stat"><div class="label">Läuft bald ab</div><div class="value">${expiring}</div><div class="hint">innerhalb 90 Tagen</div></div>`}
+function fillSelectors(){const months=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];monthSelect.innerHTML=months.map((m,i)=>`<option value="${i}" ${i===current.getMonth()?'selected':''}>${m}</option>`).join('');let ys=[];for(let y=new Date().getFullYear()-6;y<=new Date().getFullYear()+8;y++)ys.push(y);yearSelect.innerHTML=ys.map(y=>`<option ${y===current.getFullYear()?'selected':''}>${y}</option>`).join('');yearOverviewSelect.innerHTML=ys.map(y=>`<option ${y===overviewYear?'selected':''}>${y}</option>`).join('');trEmployee.innerHTML=data.employees.filter(e=>e.active!=='inactive').map(e=>`<option value="${e.id}">${e.first} ${e.last}</option>`).join('');trType.innerHTML=data.types.map(t=>`<option>${t}</option>`).join('');historyFilter.innerHTML='<option value="all">Alle Jahre</option>'+ys.map(y=>`<option>${y}</option>`).join('')}
+function renderCalendar(){const box=document.getElementById('calendar');box.innerHTML='';const y=current.getFullYear(),m=current.getMonth();let start=new Date(y,m,1);let offset=(start.getDay()+6)%7;let first=new Date(y,m,1-offset);for(let i=0;i<42;i++){let d=new Date(first);d.setDate(first.getDate()+i);let iso=d.toISOString().slice(0,10);let ev=data.trainings.filter(t=>t.date===iso);let div=document.createElement('div');div.className='day'+(d.getMonth()!==m?' out':'')+(iso===new Date().toISOString().slice(0,10)?' today':'');div.innerHTML=`<div class="num">${d.getDate()}</div>`+ev.map(t=>{let emp=data.employees.find(e=>e.id===t.employeeId);return `<div class="event ${statusOf(t)} ${t.mandatory?'mandatory':''}" title="${t.title} · ${emp?emp.first+' '+emp.last:''}">${t.title}</div>`}).join('');box.appendChild(div)}}
+function renderTeamFocus(){let arr=data.employees.filter(e=>e.active!=='inactive').map(e=>{let ts=data.trainings.filter(t=>t.employeeId===e.id);let pending=ts.filter(t=>t.mandatory&&statusOf(t)!=='done').length;let soon=ts.filter(t=>t.validUntil&&daysUntil(t.validUntil)>=0&&daysUntil(t.validUntil)<=90).length;return{e,pending,soon,total:ts.length}}).sort((a,b)=>(b.pending+b.soon)-(a.pending+a.soon)).slice(0,8);document.getElementById('teamFocus').innerHTML=arr.length?arr.map(x=>`<div class="item"><div class="person"><div class="avatar">${initials(x.e)}</div><div><strong>${x.e.first} ${x.e.last}</strong><small>${x.e.role||'ohne Funktion'} · ${x.total} Einträge</small></div></div>${x.pending?`<span class="badge warn">${x.pending} offen</span>`:`<span class="badge good">aktuell</span>`}</div>`).join(''):'<div class="empty">Noch keine Mitarbeiter angelegt.</div>'}
+function renderEmployees(){let q=(employeeSearch.value||'').toLowerCase();let arr=data.employees.filter(e=>(e.first+' '+e.last+' '+(e.role||'')).toLowerCase().includes(q));employeeList.innerHTML=arr.length?arr.map(e=>{let count=data.trainings.filter(t=>t.employeeId===e.id).length;return `<div class="item"><div class="person"><div class="avatar">${initials(e)}</div><div><strong>${e.first} ${e.last}</strong><small>${e.role||'ohne Funktion'} · ${count} Fortbildungen</small></div></div><div><span class="badge">${e.active==='inactive'?'inaktiv':'aktiv'}</span> <button class="smallBtn dangerText" onclick="removeEmployee('${e.id}')">Löschen</button></div></div>`}).join(''):'<div class="empty">Keine Mitarbeiter gefunden.</div>'}
+function renderHistory(){let filter=historyFilter.value||'all';let rows=[...data.trainings].sort((a,b)=>b.date.localeCompare(a.date)).filter(t=>filter==='all'||String(new Date(t.date).getFullYear())===filter);historyBody.innerHTML=rows.length?rows.map(t=>{let e=data.employees.find(x=>x.id===t.employeeId);let st=statusOf(t);return `<tr><td>${fmt(t.date)}</td><td>${e?e.first+' '+e.last:'gelöscht'}</td><td>${t.title}</td><td>${t.type}</td><td><span class="badge ${st==='expired'?'warn':st==='done'?'good':''}">${st==='planned'?'geplant':st==='done'?'absolviert':'abgelaufen'}</span></td></tr>`}).join(''):'<tr><td colspan="5" class="empty">Noch keine Einträge.</td></tr>'}
+function renderTypes(){typeList.innerHTML=data.types.map((t,i)=>`<div class="typeRow"><input class="input" value="${t}" onchange="renameType(${i},this.value)"><button class="smallBtn dangerText" onclick="removeType(${i})">×</button></div>`).join('')}
+function renderYear(){const g=yearGrid;g.innerHTML='';const months=['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];for(let m=0;m<12;m++){let month=document.createElement('div');month.className='monthMini';let count=data.trainings.filter(t=>{let d=new Date(t.date);return d.getFullYear()===overviewYear&&d.getMonth()===m}).length;month.innerHTML=`<h3><span>${months[m]}</span><span class="badge">${count}</span></h3><div class="miniWeeks"></div>`;let mini=month.querySelector('.miniWeeks');let first=new Date(overviewYear,m,1),offset=(first.getDay()+6)%7,days=new Date(overviewYear,m+1,0).getDate();for(let i=0;i<offset;i++)mini.innerHTML+='<div class="miniCell" style="visibility:hidden"></div>';for(let d=1;d<=days;d++){let iso=`${overviewYear}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;let ev=data.trainings.filter(t=>t.date===iso);let cls='miniCell'+(ev.length?' has':'')+(ev.length>1?' hot':'')+(ev.some(t=>t.mandatory)?' mand':'');mini.innerHTML+=`<div class="${cls}" title="${d}. ${months[m]} · ${ev.length} Termin(e)"></div>`}g.appendChild(month)}}
+function renderAll(){fillSelectors();renderStats();renderCalendar();renderTeamFocus();renderEmployees();renderHistory();renderTypes();renderYear()}
+window.removeEmployee=id=>{if(confirm('Mitarbeiter und zugehörige Fortbildungen wirklich löschen?')){data.employees=data.employees.filter(e=>e.id!==id);data.trainings=data.trainings.filter(t=>t.employeeId!==id);save()}};
+window.renameType=(i,val)=>{let old=data.types[i];data.types[i]=val.trim()||old;data.trainings.forEach(t=>{if(t.type===old)t.type=data.types[i]});save()};
+window.removeType=i=>{if(data.types.length<=1)return alert('Mindestens eine Fortbildungsart muss vorhanden bleiben.');let old=data.types[i];if(data.trainings.some(t=>t.type===old)&&!confirm('Diese Kategorie wird bereits verwendet. Trotzdem entfernen?'))return;data.types.splice(i,1);save()};
+addEmployeeBtn.onclick=quickEmployee.onclick=()=>openModal('employeeModal');
+addTrainingBtn.onclick=()=>{if(!data.employees.length)return alert('Lege zuerst mindestens einen Mitarbeiter an.');trDate.value=new Date().toISOString().slice(0,10);openModal('trainingModal')};
+saveEmployee.onclick=()=>{if(!empFirst.value.trim()||!empLast.value.trim())return alert('Vorname und Nachname fehlen.');data.employees.push({id:uid(),first:empFirst.value.trim(),last:empLast.value.trim(),role:empRole.value.trim(),active:empActive.value});empFirst.value=empLast.value=empRole.value='';closeModal('employeeModal');save()};
+saveTraining.onclick=()=>{if(!trTitle.value.trim()||!trDate.value)return alert('Titel und Datum fehlen.');data.trainings.push({id:uid(),employeeId:trEmployee.value,type:trType.value,title:trTitle.value.trim(),date:trDate.value,validUntil:trValidUntil.value,status:trStatus.value,mandatory:trMandatory.value==='yes'});trTitle.value='';trValidUntil.value='';closeModal('trainingModal');save()};
+addTypeBtn.onclick=()=>{let v=newType.value.trim();if(v&&!data.types.includes(v)){data.types.push(v);newType.value='';save()}};
+employeeSearch.oninput=renderEmployees;historyFilter.onchange=renderHistory;
+monthSelect.onchange=()=>{current.setMonth(+monthSelect.value);renderCalendar()};yearSelect.onchange=()=>{current.setFullYear(+yearSelect.value);renderCalendar()};prevMonth.onclick=()=>{current.setMonth(current.getMonth()-1);renderAll()};nextMonth.onclick=()=>{current.setMonth(current.getMonth()+1);renderAll()};
+yearOverviewSelect.onchange=()=>{overviewYear=+yearOverviewSelect.value;renderYear()};prevYear.onclick=()=>{overviewYear--;renderAll()};nextYear.onclick=()=>{overviewYear++;renderAll()};
+exportBtn.onclick=()=>{let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='fortbildungsplan-homberg.json';a.click();URL.revokeObjectURL(a.href)};
+importFile.onchange=e=>{let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let x=JSON.parse(r.result);if(!x.employees||!x.types||!x.trainings)throw 0;data=x;save()}catch{alert('Ungültige Datei.')}};r.readAsText(f)};
+resetBtn.onclick=()=>{if(confirm('Wirklich alle Daten löschen?')){data=structuredClone(defaultData);save()}};
+seedBtn.onclick=()=>{let y=new Date().getFullYear();let E=[['Anna','Berger','Pflegefachkraft'],['Murat','Kaya','Fachpfleger Notfallpflege'],['Lisa','Neumann','Pflegefachkraft'],['Jan','Scholz','Praxisanleiter'],['Sofia','Wagner','Pflegefachkraft'],['Daniel','Becker','Fachpfleger Notfallpflege']];data.employees=E.map(x=>({id:uid(),first:x[0],last:x[1],role:x[2],active:'active'}));let [a,b,c,d,e,f]=data.employees;data.trainings=[{id:uid(),employeeId:a.id,type:'Reanimation',title:'BLS Refresher',date:`${y}-09-18`,validUntil:`${y+1}-09-18`,status:'planned',mandatory:true},{id:uid(),employeeId:b.id,type:'Notfallpflege',title:'Traumaversorgung',date:`${y}-09-23`,validUntil:'',status:'planned',mandatory:false},{id:uid(),employeeId:c.id,type:'Hygiene',title:'Hygiene Pflichtunterweisung',date:`${y}-08-10`,validUntil:`${y+1}-08-10`,status:'done',mandatory:true},{id:uid(),employeeId:d.id,type:'Brandschutz',title:'Brandschutzhelfer',date:`${y}-10-06`,validUntil:`${y+2}-10-06`,status:'planned',mandatory:true},{id:uid(),employeeId:e.id,type:'Medizinprodukte',title:'MPG Einweisung Defibrillator',date:`${y-1}-11-14`,validUntil:`${y}-10-01`,status:'done',mandatory:true},{id:uid(),employeeId:f.id,type:'Reanimation',title:'ALS Megacode',date:`${y}-07-03`,validUntil:`${y+1}-07-03`,status:'done',mandatory:true}];save()};
+renderAll();
+</script>
+</body>
+</html>
